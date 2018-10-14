@@ -4,14 +4,17 @@ This repository is a basic Schematic implementation that serves as a starting po
 
 This project is still pretty much an empty placeholder for the example files that will illustrate the talk "Efficiently setting up an Angular project and how Schematics may help with it", hosted along with [Natalia Venditto](https://twitter.com/AnfibiaCreativa), soon available in a conference near you.
 
-### Testing
+### How to test this sample project
 
-To test locally, install `@angular-devkit/schematics-cli` globally and use the `schematics` command line tool. That tool acts the same as the `generate` command of the Angular CLI, but also has a debug mode.
+This project requires both to compile the schematics project and an Angular sandbox project where to test the functionalities of the former. Please follow the following steps:
 
-Check the documentation with
-```bash
-schematics --help
-```
+1. Clone the Schematics sample project by running `git clone https://github.com/deeleman/angular-schematics-talk.git`. Fetch all dependencies by running `npm i` in the target folder once cloned.
+2. Build the Schematics project by running `npm run build`
+3. Navigate one level up and generate an empty Angular project on a sibling folder by running `ng new test-project`
+4. Navigate to the resulting folder and symlink the `aliased-sass` Schematics sample collection by running `npm link ./../aliased-sass`
+5. Run the schematics project into your new project by running `ng generate aliased-sass:aliased-sass --name=myProject`
+
+You can see how a new path alias named `@my-project` has been created for you at `tsconfig.json`.
 
 ### Unit Testing
 

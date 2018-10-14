@@ -1,19 +1,39 @@
-import { Rule, SchematicContext, Tree, chain, externalSchematic } from '@angular-devkit/schematics';
+import { dasherize } from '@angular-devkit/core/src/utils/strings';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
-// You don't have to export the function as default. You can also have more than one rule factory
-// per file.
-// Leverages the "application" schematic: https://github.com/angular/angular-cli/tree/master/packages/schematics/angular/application
 export function aliasedSass(options: any): Rule {
-  return chain([
-    externalSchematic('@schematics/angular', 'application', options),
-    (tree: Tree, _context: SchematicContext) => {
-      // TODO: Merge './file' filesystem into Tree dir representation. Rename __name__.scss on the go.
+  return (tree: Tree, _context: SchematicContext) => {
+    tree.getDir('/').visit(filePath => {
+      if (filePath.includes('node_modules')) {
+        return;
+      }
 
-      // TODO: Update 'tsconfig.json' in Tree dir representation to include "@__name__/*" as alias to "["src/app/*"]"
+      if (!filePath.endsWith('tsconfig.json')) {
+        return;
+      }
 
-      // TODO: Rewrite styles.__style__ (if necessary) to feature renamed import. Replace into Tree dir representation
-    
-      return tree;
-    },
-  ]);
+      const tsConfigBuffer = tree.read(filePath);
+      if (!tsConfigBuffer) {
+        return;
+      }
+
+      const rawTsConfig = JSON.parse(tsConfigBuffer.toString('utf8'));
+      const paths = { ...rawTsConfig['compilerOptions']['paths'] };
+      const alias = dasherize(options.name);
+
+      paths[`@${alias}`] = ['src/app/*'];
+
+      const decoratedTsConfigJSON = {
+        ...rawTsConfig,
+        compilerOptions: {
+          ...rawTsConfig['compilerOptions'],
+          paths
+        }
+      };
+
+      tree.overwrite(filePath, JSON.stringify(decoratedTsConfigJSON, null, 2));
+    });
+
+    return tree;
+  };
 }
