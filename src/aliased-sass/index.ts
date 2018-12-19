@@ -1,5 +1,7 @@
 import { dasherize } from '@angular-devkit/core/src/utils/strings';
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule,
+  SchematicContext,
+  Tree } from '@angular-devkit/schematics';
 
 export function aliasedSass(options: any): Rule {
   return (tree: Tree, _context: SchematicContext) => {

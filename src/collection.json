@@ -6,6 +6,12 @@
       "factory": "./aliased-sass/index#aliasedSass",
       "aliases": [ "asass" ],
       "schema": "./aliased-sass/schema.json"
+    },
+    "generate-files": {
+      "description": "Generates a set of sass files with our desired structure",
+      "factory": "./generate-files/index#generateFiles",
+      "aliases": [ "gfiles" ],
+      "schema": "./generate-files/schema.json"
     }
   }
 }
