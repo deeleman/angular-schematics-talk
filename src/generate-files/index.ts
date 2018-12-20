@@ -12,7 +12,6 @@ import { Rule,
   filter } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 
-
 export function generateFiles(options: any): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     _context.logger.info(JSON.stringify(options));
