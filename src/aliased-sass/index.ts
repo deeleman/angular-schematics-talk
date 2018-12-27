@@ -29,7 +29,7 @@ export function aliasedSass(options: any): Rule {
         const rawTsConfig = JSON.parse(tsConfigBuffer.toString('utf8'));
         const paths = { ...rawTsConfig['compilerOptions']['paths'] };
         const alias = dasherize(options.name);
-  
+
         paths[`@${alias}`] = ['src/app/*'];
   
         const decoratedTsConfigJSON = {
