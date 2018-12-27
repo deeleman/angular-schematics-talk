@@ -9,7 +9,7 @@ import { Rule,
 export function aliasedSass(options: any): Rule {
   return chain([
     // chains and generates the generate-files schematic
-    schematic(`generate-files`,options),
+    schematic(`generate-files`, options),
     (tree: Tree, _context: SchematicContext) => {
 
       tree.getDir('/').visit(filePath => {
