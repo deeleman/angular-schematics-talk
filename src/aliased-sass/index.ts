@@ -1,5 +1,6 @@
 import { dasherize } from '@angular-devkit/core/src/utils/strings';
-import { Rule,
+import { 
+  Rule,
   SchematicContext,
   Tree, 
   chain,

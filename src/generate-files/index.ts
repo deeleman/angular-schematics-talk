@@ -8,11 +8,11 @@ import { Rule,
   mergeWith,
   branchAndMerge,
   chain,
-  move,
   noop,
   filter } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 import { dasherize } from '@angular-devkit/core/src/utils/strings';
+// import { getConfig } from '@schematics/angular/utility/config';
 
 export function generateFiles(options: any): Rule {
   return (tree: Tree, _context: SchematicContext) => {
@@ -23,6 +23,9 @@ export function generateFiles(options: any): Rule {
     const currentStyles = `./src/styles.scss`;
     const angularConfigPath = './angular.json';
     const styles = [`${dir}/${projectId}/global.scss`];
+    // const config = getConfig(tree);
+
+    // _context.logger.info(config + 'config');
 
     // throw and error if either path or name options were not provided
     if (!dir) {
@@ -72,10 +75,13 @@ export function generateFiles(options: any): Rule {
         ...strings,
         ...(options as object)
       } as any),
-      // since create alwats creates at top level, we then move it under the right path
-      move(dir),
+      // since before it was created always at top level,
+      // we needed to move it under the right path
+      // but not anylonger
+      // move(dir),
     ]);
 
     return chain([branchAndMerge(chain([mergeWith(source)]))])(tree, _context);
   };
 }
+
