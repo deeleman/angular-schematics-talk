@@ -31,7 +31,7 @@ export function aliasedSass(options: any): Rule {
         const paths = { ...rawTsConfig['compilerOptions']['paths'] };
         const alias = dasherize(options.name);
 
-        paths[`@${alias}`] = ['src/app/*'];
+        paths[`@${alias}/*`] = ['src/*'];
   
         const decoratedTsConfigJSON = {
           ...rawTsConfig,
