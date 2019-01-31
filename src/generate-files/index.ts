@@ -16,6 +16,7 @@ export function generateFiles(options: any): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     _context.logger.info(JSON.stringify(options));
 
+    // since project name is dynamic, we need to retrieve it from the config of the workspace
     const workspace = getWorkspace(tree);
     const project = (Object.keys(workspace.projects)[0]).toString();
     const dir = options.path;
@@ -36,9 +37,6 @@ export function generateFiles(options: any): Rule {
       }
 
       const rawAngularConfig = JSON.parse(angularJSONBuffer.toString('utf8'));
-      // since project name is dynamic, we need to retrieve it
-      // const projects = rawAngularConfig.projects;
-
       // we update the property with the new value for global
       rawAngularConfig['projects'][project]['architect']['build']['options']['styles'] = styles;
 
